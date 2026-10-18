@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+/*
+ * Natural Sensorial — luxo minimalista.
+ *
+ * Tipografia: Playfair Display (serifa, títulos editoriais) + Montserrat
+ * (sem serifa, corpo e interface). Ambas carregadas via next/font no layout.
+ */
+@theme inline {
+  --font-sans:
+    var(--font-montserrat), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-heading: var(--font-playfair), Georgia, "Times New Roman", serif;
+}
+
+@theme {
+  /* Fundo principal: off-white orgânico (algodão). Nunca branco puro. */
+  --color-cotton: #f9f7f3;
+  /* Variação um tom mais fundo, para alternar seções sem quebrar o respiro. */
+  --color-cotton-deep: #f1ede4;
+
+  /*
+   * Terracota / argila: exclusivo de CTAs, links importantes e pequenos
+   * detalhes de conversão. #b04a2e tem contraste 5,4:1 com texto branco (AA);
+   * #c85a3c fica só para detalhes decorativos, onde o contraste não é exigido.
+   */
+  --color-terracotta: #b04a2e;
+  --color-terracotta-deep: #94391f;
+  --color-terracotta-soft: #c85a3c;
+
+  /* Verde oliva / alecrim: selos, ícones, seções secundárias. */
+  --color-olive: #5b6e53;
+  --color-olive-deep: #485a41;
+  --color-olive-mist: #e9ede4;
+
+  /* Madeira carbonizada: todo o texto e contornos (no lugar do preto puro). */
+  --color-charcoal: #2c2a29;
+
+  /* Sombras difusas e longas: profundidade sem peso. */
+  --shadow-soft:
+    0 24px 56px -28px rgb(44 42 41 / 0.3), 0 8px 22px -14px rgb(44 42 41 / 0.14);
+  --shadow-lift:
+    0 44px 90px -34px rgb(44 42 41 / 0.42),
+    0 16px 36px -18px rgb(44 42 41 / 0.2);
+  --shadow-cta: 0 16px 30px -14px rgb(176 74 46 / 0.55);
+
+  --animate-fade-up: fade-up 0.4s ease-out both;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* A página é deliberadamente clara/orgânica: não herdamos o tema escuro do SO. */
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Compensa a barra de navegação flutuante ao saltar para âncoras. */
+  scroll-padding-top: 6rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/*
+ * Texturas: ruído sutil que lembra papel rústico / pedra crua. Quebra a
+ * frieza do digital sem competir com o conteúdo. Seções com fundo próprio
+ * reaplicam o grão com as classes abaixo.
+ */
+body {
+  background-color: var(--color-cotton);
+  background-image: url("../assets/textures/grain-dark.png");
+  background-size: 160px 160px;
+}
+
+.grain-dark {
+  background-image: url("../assets/textures/grain-dark.png");
+  background-size: 160px 160px;
+}
+
+.grain-light {
+  background-image: url("../assets/textures/grain-light.png");
+  background-size: 160px 160px;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+}
+
+/*
+ * Seções recebem foco por script ao clicar num link de âncora (ver
+ * SmoothAnchors). Elas não são controles, então não precisam de contorno.
+ */
+[tabindex="-1"]:focus-visible {
+  outline: none;
+}
+
+::selection {
+  background-color: color-mix(in srgb, var(--color-terracotta) 22%, transparent);
+  color: var(--color-charcoal);
+}
