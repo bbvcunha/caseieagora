@@ -27,7 +27,7 @@ const DESCRIPTION =
 
 const OG_TITLE = "Casei, e agora, o que vamos comer? | Chef Leciane Carine";
 const OG_DESCRIPTION =
-  "Sua vida a dois não precisa depender do delivery. 138 páginas práticas para montar a cozinha, fazer 15 a 20 marmitas e cozinhar juntos do zero.";
+  "Sua vida a dois não precisa depender do delivery.";
 
 const OG_IMAGE = {
   url: "/images/og-capa.jpg",
