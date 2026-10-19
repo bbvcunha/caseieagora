@@ -51,9 +51,6 @@ const HERO_POINTS = [
   "Garantia incondicional de 7 dias",
 ] as const;
 
-/** Foto quadrada (704×704) em /public. Use `null` para voltar ao placeholder. */
-const COUPLE_PHOTO_SRC: string | null = "/images/leciane-e-bruno.jpg";
-
 const NAV_LINKS = [
   { href: "#para-quem", label: "Para quem é" },
   { href: "#livro", label: "O livro" },
@@ -630,47 +627,20 @@ function Playlists() {
   );
 }
 
-function CouplePhoto() {
-  const shared =
-    "size-48 shrink-0 rounded-full ring-8 ring-cotton shadow-lift sm:size-60 lg:size-72";
-
-  if (COUPLE_PHOTO_SRC) {
-    return (
-      <Image
-        src={COUPLE_PHOTO_SRC}
-        alt="Leciane, de jaleco branco de chef, e Bruno sorrindo juntos"
-        width={704}
-        height={704}
-        sizes="(min-width: 1024px) 288px, (min-width: 640px) 240px, 192px"
-        className={`${shared} object-cover`}
-      />
-    );
-  }
-
-  // Placeholder circular até a foto real do casal.
-  return (
-    <div
-      role="img"
-      aria-label="Espaço reservado para a foto dos autores, Leciane e Bruno"
-      className={`${shared} grid place-items-center bg-olive-mist`}
-    >
-      <span
-        aria-hidden
-        className="font-heading text-5xl font-medium text-olive/70"
-      >
-        L &amp; B
-      </span>
-    </div>
-  );
-}
-
 /** Autoridade: quem escreve, por que o método funciona e (quando houver) depoimentos. */
 function Autores() {
   return (
     <Section id="autores" labelledBy="authors-title">
       <div className="grid items-center gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-        <div className="mx-auto">
-          <CouplePhoto />
+        <div className="mx-auto overflow-hidden rounded-[1.75rem] shadow-lift">
+          <Image
+            src="/images/autores-leciane-bruno.jpg"
+            alt="Leciane, de jaleco branco de chef, e Bruno sorrindo juntos"
+            width={576}
+            height={1024}
+            unoptimized
+            className="block h-auto w-56 sm:w-64 lg:w-72"
+          />
         </div>
 
         <div className="text-center lg:text-left">
