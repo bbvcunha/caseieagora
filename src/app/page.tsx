@@ -3,27 +3,24 @@ import type { ReactNode } from "react";
 import {
   ArrowUp,
   Check,
-  ChefHat,
   Clock,
   CookingPot,
-  FileText,
   Headphones,
-  Heart,
-  Mail,
+  Lock,
   Plus,
-  Quote,
   Recycle,
-  ShieldCheck,
   ShoppingBasket,
   Soup,
   Users,
   Utensils,
   Wine,
-  X,
   type LucideIcon,
 } from "lucide-react";
+import { ChapterRoadmap } from "@/components/chapter-roadmap";
 import { CtaButton } from "@/components/cta-button";
+import { EbookPreview } from "@/components/ebook-preview";
 import { PlaylistShowcase } from "@/components/playlist-showcase";
+import { Testimonials } from "@/components/testimonials";
 import { CHECKOUT_URL } from "@/lib/checkout";
 import { PLAYLISTS } from "@/lib/playlists";
 import { createQrCode } from "@/lib/qr";
@@ -34,7 +31,25 @@ import { createQrCode } from "@/lib/qr";
 
 const BOOK_TITLE = "Casei, e agora o que vamos comer?";
 
-const PRICE = { currency: "R$", whole: "39", cents: "90" } as const;
+const PRICE = {
+  currency: "R$",
+  whole: "39",
+  cents: "90",
+  originalWhole: "79",
+  originalCents: "80",
+  discountPercent: 50,
+} as const;
+
+const BUY_LABEL = "Quero meu ebook por 39,90";
+
+const HERO_POINTS = [
+  "E-book Digital para consultar no celular, tablet ou computador",
+  "Bônus – Lista de aquisições de utensílios",
+  "Bônus – Manual de cortes",
+  "Playlists Spotify",
+  "Acesso imediato no e-mail",
+  "Garantia incondicional de 7 dias",
+] as const;
 
 /** Foto quadrada (704×704) em /public. Use `null` para voltar ao placeholder. */
 const COUPLE_PHOTO_SRC: string | null = "/images/leciane-e-bruno.jpg";
@@ -47,58 +62,27 @@ const NAV_LINKS = [
   { href: "#duvidas", label: "Dúvidas" },
 ] as const;
 
-/** Identificação: quem se reconhece neste livro (personas do briefing). */
-const PERSONAS: readonly {
-  icon: LucideIcon;
-  title: string;
-  pain: string;
-  wish: string;
-}[] = [
+/** O que vem dentro do e-book. */
+const INSIDE: readonly { icon: LucideIcon; text: string }[] = [
   {
-    icon: Heart,
-    title: "Os recém-juntos",
-    pain: "Vocês acabaram de casar ou de juntar as escovas de dentes. A rotina alimentar virou caos, o delivery pesa no orçamento e o cardápio nunca muda.",
-    wish: "Uma rotina aconchegante, mais economia e boas memórias ao redor da mesa.",
+    icon: Utensils,
+    text: "Guia introdutório: corte seguro, controle de fogo (baixo, médio e alto), temperos e segurança alimentar (padrão ANVISA/USDA)",
   },
   {
-    icon: ChefHat,
-    title: "O iniciante intimidado",
-    pain: "Sempre houve alguém cozinhando por você. Agora o medo de errar, de se queimar ou de estragar o ingrediente fala mais alto, e cozinhar parece pedir técnica e utensílios caros.",
-    wish: "Aprender o básico, do corte ao arroz soltinho e ao ovo no ponto, sem julgamentos.",
+    icon: CookingPot,
+    text: "Lista enxuta de utensílios essenciais + tabela de medidas caseiras (para quem ainda não tem balança)",
+  },
+  {
+    icon: ShoppingBasket,
+    text: "Sistema das 15 a 20 marmitas quinzenais + lista de compras inteligente e guia do que congela e não congela bem",
   },
   {
     icon: Wine,
-    title: "O anfitrião frustrado",
-    pain: "Você abre a casa para os amigos e passa a noite isolado na cozinha, preso ao fogão e exausto, enquanto todo mundo se diverte na sala.",
-    wish: "Servir bem, com organização, e curtir o próprio jantar.",
+    text: "Cronograma prático para receber amigos (receitas para 4 pessoas) e jantar romântico a dois sem ficar preso no fogão",
   },
-];
-
-const BEFORE = [
-  "Delivery quase todo dia, e a conta chega junto",
-  "A geladeira cheia e a mesma pergunta de sempre",
-  "O anfitrião de costas para os amigos",
-  "Sobras que acabam virando desperdício",
-] as const;
-
-const AFTER = [
-  "Marmitas prontas para a semana inteira",
-  "Sobras que viram o café do dia seguinte",
-  "Mesa posta com simplicidade, todo mundo junto",
-  "Uma cozinha com a cara dos dois",
-] as const;
-
-/** O que vem dentro do e-book (diferenciais do briefing). */
-const INSIDE: readonly { icon: LucideIcon; text: string }[] = [
-  { icon: Utensils, text: "Técnicas básicas de corte e manuseio de facas" },
-  {
-    icon: CookingPot,
-    text: "Lista enxuta de utensílios indispensáveis, sem gastos desnecessários",
-  },
-  { icon: ShoppingBasket, text: "Planejamento eficiente de compras semanais" },
   {
     icon: Headphones,
-    text: "Playlists exclusivas no Spotify, acessíveis por QR Code",
+    text: "4 playlists exclusivas no Spotify, acessíveis por QR Code ou clique direto no PDF",
   },
 ];
 
@@ -116,15 +100,15 @@ const BENEFITS: readonly {
     description:
       "Corte, utensílios essenciais, compras da semana planejadas e o segredo para combinar ervas e especiarias básicas. Menos tempo decidindo, mais tempo à mesa.",
     image: "/images/beneficio-tempo.jpg",
-    imageAlt: "Mãos picando ervas frescas com uma faca sobre a tábua",
+    imageAlt: "Mãos picando cebola roxa na tábua, com ervas, azeite e pimentões ao fundo",
   },
   {
     icon: Soup,
-    title: "Marmitas inteligentes",
+    title: "Refeições para a semana",
     description:
       "A lógica para transformar ingredientes básicos em até 15 refeições variadas para a semana, economizando tempo e energia.",
     image: "/images/beneficio-marmitas.jpg",
-    imageAlt: "Marmitas de vidro empilhadas, cheias de refeições prontas",
+    imageAlt: "Marmitas de vidro com arroz, frango, brócolis e massa prontas para a semana",
   },
   {
     icon: Recycle,
@@ -132,15 +116,16 @@ const BENEFITS: readonly {
     description:
       "Reaproveitamento criativo para dar vida nova às sobras do jantar anterior. Aprender a cozinhar também é aprender a olhar para o que já temos.",
     image: "/images/beneficio-reaproveitamento.jpg",
-    imageAlt: "Café da manhã com ovos mexidos, pão tostado, frutas e café",
+    imageAlt: "Tapioca recheada com frango desfiado e queijo, ao lado de um café com leite",
   },
   {
     icon: Users,
-    title: "Jantares sem ficar de costas",
+    title: "Seja um bom anfitrião",
     description:
       "Métodos de pré-preparo para receber amigos sem passar a noite no fogão. Você serve bem e ainda participa da conversa.",
     image: "/images/beneficio-receber.jpg",
-    imageAlt: "Tábua de frios com queijos, uvas e figos servida entre amigos",
+    imageAlt:
+      "Tábua de frios com queijos, embutidos, frutas e castanhas para receber amigos",
   },
 ];
 
@@ -150,13 +135,6 @@ const METHOD_POINTS = [
   "Cozinhar é prática: observar, perguntar, errar e, aos poucos, criar repertório.",
   "Sem cinquenta panelas: uma panela de cada vez, no ritmo de cada casa.",
 ] as const;
-
-/**
- * Depoimentos de leitores. Enquanto estiver vazio, a seção não aparece.
- * Preencha apenas com relatos reais, com autorização de quem os escreveu.
- */
-const TESTIMONIALS: readonly { quote: string; name: string; detail?: string }[] =
-  [];
 
 const FAQ: readonly { question: string; answer: string }[] = [
   {
@@ -176,7 +154,8 @@ const FAQ: readonly { question: string; answer: string }[] = [
   },
   {
     question: "Consigo ler no celular?",
-    answer: "Sim. O PDF abre no celular, no tablet ou no computador.",
+    answer:
+      "Sim. As 138 páginas foram diagramadas para o celular: dá para ler na bancada, sem dar zoom em letra miúda. O PDF também abre no tablet e no computador.",
   },
   {
     question: "Como funcionam as playlists?",
@@ -195,11 +174,32 @@ const FAQ: readonly { question: string; answer: string }[] = [
   },
 ];
 
-const OFFER_INCLUDES = [
-  "E-book completo em PDF",
-  "QR Codes com playlists exclusivas no Spotify",
-  "Acesso imediato ao seu e-mail",
-] as const;
+const OFFER_STACK: readonly { text: string; value: string }[] = [
+  {
+    text: "E-book Completo “Casei, e agora, o que vamos comer?” (138 páginas diagramadas para leitura fácil no celular, tablet, PC ou impressão)",
+    value: "Valor: R$ 49,90",
+  },
+  {
+    text: "Guia Introdutório “O Básico da Nossa Cozinha” (Lista enxuta de utensílios, cortes seguros, medidas sem balança, controle de fogo e segurança alimentar ANVISA/USDA)",
+    value: "Valor: R$ 19,90",
+  },
+  {
+    text: "Sistema das 15 a 20 Marmitas Quinzenais (Lista de compras inteligente + combinações modulares + guia do que congela e não congela)",
+    value: "Valor: R$ 27,00",
+  },
+  {
+    text: "Guia “Hoje Vamos Receber” & “Noite a Dois” (Cronograma de anfitrião sem ficar preso no fogão + cardápios completos para amigos e casal)",
+    value: "Incluso",
+  },
+  {
+    text: "Boxes Práticos “Segredo de Chef”, “Não Faça Isso” e “Deu Errado?” em todas as receitas para salvar qualquer preparo",
+    value: "Incluso",
+  },
+  {
+    text: "4 Playlists Exclusivas no Spotify integradas por QR Code e link direto (“Café sem pressa”, “Os amigos chegaram”, “Jantar feito junto” e “Hoje eu cozinho para você”)",
+    value: "Bônus Exclusivo",
+  },
+];
 
 /* -------------------------------------------------------------------------- */
 /*  Primitivas de UI                                                           */
@@ -286,7 +286,7 @@ function Navbar() {
     <header className="fixed inset-x-0 top-3 z-50 px-3 sm:top-4 sm:px-6">
       <nav
         aria-label="Principal"
-        className="mx-auto flex h-14 max-w-5xl items-center justify-between rounded-xl border border-charcoal/10 bg-cotton/90 py-2 pr-2 pl-3 shadow-soft backdrop-blur-md"
+        className="mx-auto flex min-h-14 max-w-5xl items-center justify-between gap-3 rounded-xl border border-charcoal/10 bg-cotton/90 py-2 pr-2 pl-3 shadow-soft backdrop-blur-md"
       >
         <a
           href="#topo"
@@ -323,7 +323,7 @@ function Navbar() {
             withArrow={false}
             className="ml-1"
           >
-            Quero o guia
+            {BUY_LABEL}
           </CtaButton>
         </div>
       </nav>
@@ -345,8 +345,9 @@ function FrigideiraCard() {
         A Frigideira Solitária
       </p>
       <p className="mt-2 text-sm leading-relaxed text-charcoal/80">
-        Um casal começou a vida a dois com uma frigideira e a convicção de que
-        amendoim era jantar. Hoje, a cozinha é dos dois.
+        Eu, chef de cozinha, havia acabado de me apaixonar por um homem que
+        voluntariamente comia arroz sem sal e era perfeitamente capaz de
+        considerar amendoim uma refeição.
       </p>
     </aside>
   );
@@ -381,29 +382,36 @@ function Hero() {
             <em className="text-terracotta">depender do delivery.</em>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-pretty text-charcoal/75 lg:mx-0">
-            Um guia descomplicado para montar a primeira cozinha, aprender a
-            cozinhar e começar uma deliciosa vida a dois.
-          </p>
+          <div className="mx-auto mt-6 max-w-2xl space-y-4 text-base leading-relaxed text-pretty text-charcoal/80 sm:text-lg lg:mx-0">
+            <p>
+              Descubra o prazer de preparar, em casa, a comida que vocês gostam
+              de comer. Receitas explicadas passo a passo, histórias reais e
+              dicas da chef para transformar ingredientes simples em refeições
+              que vocês terão orgulho de servir.
+            </p>
+            <p>
+              Do café da manhã às marmitas, do jantar a dois à mesa com amigos:
+              aprendam a combinar sabor e a organizar uma rotina que funciona,
+              mesmo que hoje vocês ainda não saibam por onde começar.
+            </p>
+          </div>
 
           <div className="mt-10 flex flex-col items-center gap-5 lg:items-start">
             <CtaButton href={CHECKOUT_URL} className="w-full sm:w-auto">
-              Quero descomplicar minha cozinha
+              {BUY_LABEL}
             </CtaButton>
 
-            <ul className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-charcoal/75 lg:justify-start">
-              <li className="inline-flex items-center gap-1.5">
-                <FileText className="size-4 text-olive" aria-hidden />
-                E-book em PDF
-              </li>
-              <li className="inline-flex items-center gap-1.5">
-                <Mail className="size-4 text-olive" aria-hidden />
-                Acesso imediato ao seu e-mail
-              </li>
-              <li className="inline-flex items-center gap-1.5">
-                <ShieldCheck className="size-4 text-olive" aria-hidden />
-                Garantia de 7 dias
-              </li>
+            <ul className="mx-auto grid w-full max-w-md gap-2.5 text-left text-sm text-charcoal/80 lg:mx-0">
+              {HERO_POINTS.map((point) => (
+                <li key={point} className="flex items-start gap-2">
+                  <Check
+                    className="mt-0.5 size-4 shrink-0 text-olive"
+                    strokeWidth={2.5}
+                    aria-hidden
+                  />
+                  <span>{point}</span>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -413,7 +421,7 @@ function Hero() {
           <div className="relative mx-auto aspect-[2/3] w-full max-w-[18rem] overflow-hidden rounded-md shadow-lift ring-1 ring-charcoal/10 sm:max-w-xs lg:max-w-none">
             <Image
               src="/images/capa-livro.jpg"
-              alt={`Capa do e-book ${BOOK_TITLE}, da Chef Leciane Carine: um casal cozinhando lado a lado, ela picando ervas e ele temperando uma frigideira com tomates`}
+              alt={`Capa do e-book ${BOOK_TITLE}, da Chef Leciane Carine: um casal temperando ovos fritos juntos na frigideira`}
               fill
               sizes="(min-width: 1024px) 384px, (min-width: 640px) 320px, 288px"
               quality={90}
@@ -449,117 +457,23 @@ function ParaQuem() {
           todo mundo começa de algum lugar.
         </p>
       </div>
-
-      <ul className="mt-14 grid gap-5 md:grid-cols-3 lg:gap-6">
-        {PERSONAS.map(({ icon: Icon, title, pain, wish }) => (
-          <li
-            key={title}
-            className="flex flex-col rounded-xl border border-charcoal/10 bg-cotton p-7 shadow-soft sm:p-8"
-          >
-            <span
-              aria-hidden
-              className="grid size-12 place-items-center rounded-full bg-olive-mist text-olive"
-            >
-              <Icon className="size-6" strokeWidth={1.5} />
-            </span>
-            <h3 className="mt-6 text-2xl leading-snug text-charcoal">
-              {title}
-            </h3>
-            <p className="mt-3 leading-relaxed text-charcoal/75">{pain}</p>
-
-            <div className="mt-auto pt-6">
-              <div className="border-t border-charcoal/10 pt-5">
-                <p className="text-xs font-semibold tracking-[0.18em] text-olive uppercase">
-                  O que você quer
-                </p>
-                <p className="mt-2 leading-relaxed text-charcoal">{wish}</p>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
-
-      {/* Antes e depois: a virada que o livro propõe. */}
-      <div className="mt-16 grid overflow-hidden rounded-xl border border-charcoal/10 shadow-soft md:grid-cols-2">
-        <div className="bg-cotton p-7 sm:p-10">
-          <p className="font-heading text-2xl text-charcoal/75 italic">Antes</p>
-          <ul className="mt-5 space-y-3.5">
-            {BEFORE.map((item) => (
-              <li
-                key={item}
-                className="flex items-start gap-3 leading-relaxed text-charcoal/75"
-              >
-                <X
-                  className="mt-1 size-4 shrink-0 text-terracotta"
-                  strokeWidth={2}
-                  aria-hidden
-                />
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="grain-light bg-olive p-7 text-cotton sm:p-10">
-          <p className="font-heading text-2xl italic">Depois</p>
-          <ul className="mt-5 space-y-3.5">
-            {AFTER.map((item) => (
-              <li key={item} className="flex items-start gap-3 leading-relaxed">
-                <Check
-                  className="mt-1 size-4 shrink-0"
-                  strokeWidth={2.5}
-                  aria-hidden
-                />
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
     </Section>
   );
 }
 
-/** Mockup do e-book: a capa em perspectiva, com lombada e borda de páginas. */
-function BookMockup({ className = "" }: { className?: string }) {
-  // O elemento externo só posiciona e dá a largura (via `className`); o interno
-  // cuida da proporção e da perspectiva 3D. Misturar os dois conflita no `position`.
-  return (
-    <div aria-hidden className={className}>
-      <div className="relative aspect-[2/3] w-full [transform-origin:left_center] [transform:perspective(900px)_rotateY(-14deg)]">
-        <span className="absolute inset-y-[1.5%] right-[-2.5%] w-[3%] rounded-r-sm bg-cotton-deep ring-1 ring-charcoal/15" />
-        <div className="absolute inset-0 overflow-hidden rounded-r-md rounded-l-sm shadow-lift ring-1 ring-charcoal/20">
-          <Image
-            src="/images/capa-livro.jpg"
-            alt=""
-            fill
-            sizes="160px"
-            className="object-cover"
-          />
-          <span className="absolute inset-y-0 left-0 w-[7%] bg-gradient-to-r from-charcoal/35 via-white/10 to-transparent" />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/** A solução: o produto, ambientado, e o que vem dentro. */
 function Livro() {
   return (
     <Section id="livro" labelledBy="book-title">
-      <div className="grid items-center gap-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20">
-        <div className="relative pb-12 lg:pb-14">
-          <div className="relative aspect-[3/2] overflow-hidden rounded-xl shadow-lift ring-1 ring-charcoal/10">
-            <Image
-              src="/images/livro-aberto.jpg"
-              alt="E-book aberto em duas páginas: à esquerda, o capítulo “Receber sem desaparecer da mesa”; à direita, a receita de bruschetta de queijo, ervas e azeite aromático"
-              fill
-              sizes="(min-width: 1024px) 560px, (min-width: 640px) 90vw, 100vw"
-              quality={90}
-              className="object-cover"
-            />
-          </div>
-          <BookMockup className="absolute bottom-0 left-5 w-28 sm:left-8 sm:w-36 lg:-left-6 lg:w-40" />
+      <div className="grid items-start gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+        <div className="relative mx-auto aspect-[5/8] w-full max-w-sm overflow-hidden rounded-xl shadow-lift ring-1 ring-charcoal/10 lg:mx-0 lg:max-w-none">
+          <Image
+            src="/images/capa-livro-mesa.jpg"
+            alt={`Exemplar do e-book ${BOOK_TITLE} sobre a mesa, com vinho, azeite e ingredientes ao redor`}
+            fill
+            sizes="(min-width: 1024px) 420px, (min-width: 640px) 384px, 100vw"
+            quality={90}
+            className="object-cover object-center"
+          />
         </div>
 
         <div>
@@ -596,11 +510,15 @@ function Livro() {
               </li>
             ))}
           </ul>
-
-          <CtaButton href={CHECKOUT_URL} className="mt-10 w-full sm:w-auto">
-            Quero o meu guia
-          </CtaButton>
         </div>
+      </div>
+
+      <EbookPreview />
+
+      <div className="mt-12 flex justify-center">
+        <CtaButton href={CHECKOUT_URL} className="w-full sm:w-auto">
+          {BUY_LABEL}
+        </CtaButton>
       </div>
     </Section>
   );
@@ -625,19 +543,23 @@ function Beneficios() {
         </p>
       </div>
 
-      <ul className="mt-14 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+      <p className="mt-8 text-center text-xs text-charcoal/50 sm:hidden">
+        Deslize para o lado para ver os outros cards
+      </p>
+
+      <ul className="-mx-5 mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 sm:mx-0 sm:mt-14 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
         {BENEFITS.map(
           ({ icon: Icon, title, description, image, imageAlt }) => (
             <li
               key={title}
-              className="flex flex-col overflow-hidden rounded-xl border border-charcoal/10 bg-cotton shadow-soft"
+              className="flex w-[min(82vw,22rem)] shrink-0 snap-center flex-col overflow-hidden rounded-xl border border-charcoal/10 bg-cotton shadow-soft sm:w-auto"
             >
               <div className="relative aspect-[4/3]">
                 <Image
                   src={image}
                   alt={imageAlt}
                   fill
-                  sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 100vw"
+                  sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 82vw"
                   quality={90}
                   className="object-cover"
                 />
@@ -659,6 +581,8 @@ function Beneficios() {
           ),
         )}
       </ul>
+
+      <ChapterRoadmap />
     </Section>
   );
 }
@@ -714,11 +638,11 @@ function CouplePhoto() {
     return (
       <Image
         src={COUPLE_PHOTO_SRC}
-        alt="Leciane, de jaleco branco de chef, e Bruno, autores do livro, abraçados e sorrindo para a câmera"
+        alt="Leciane, de jaleco branco de chef, e Bruno sorrindo juntos"
         width={704}
         height={704}
         sizes="(min-width: 1024px) 288px, (min-width: 640px) 240px, 192px"
-        className={`${shared} object-cover object-center`}
+        className={`${shared} object-cover`}
       />
     );
   }
@@ -755,28 +679,26 @@ function Autores() {
             Leciane Carine
           </h2>
           <p className="mt-2 font-heading text-xl text-olive italic">
-            Chef de cozinha. Casada com quem começou com uma frigideira.
+            Chef de cozinha.
           </p>
 
-          <p className="mt-6 leading-relaxed text-pretty text-charcoal/75">
-            Leciane passou boa parte da vida profissional pensando em sabor,
-            equilíbrio, técnica e apresentação. Quando se mudou para a casa de
-            Bruno, encontrou uma frigideira, uma panela elétrica e arroz sem
-            sal. Uma panela de cada vez, aquela cozinha virou a cozinha dos
-            dois.
-          </p>
-
-          <blockquote className="relative mt-8 border-t border-charcoal/10 pt-8">
-            <Quote
-              className="mx-auto size-7 text-terracotta-soft lg:mx-0"
-              strokeWidth={1.5}
-              aria-hidden
-            />
-            <p className="mt-4 font-heading text-2xl leading-snug font-medium text-balance text-charcoal italic sm:text-3xl">
-              Não queremos ensinar receitas. Queremos ajudar vocês a
-              descobrirem como funciona a cozinha da vida de vocês.
+          <div className="mt-6 space-y-4 leading-relaxed text-pretty text-charcoal/80">
+            <p>
+              Sou chef de cozinha há mais de 14 anos e este livro nasceu da
+              minha história com Bruno.
             </p>
-          </blockquote>
+            <p>
+              Quando nossas vidas se encontraram, a cozinha também precisou
+              encontrar um jeito de funcionar para nós dois. Entre descobertas,
+              improvisos e a rotina compartilhada, surgiram histórias que vou
+              dividir com vocês.
+            </p>
+            <p>
+              Reuni minha experiência profissional e nossa vida cotidiana para
+              explicar o básico com clareza e ajudar vocês a ganharem confiança,
+              uma receita de cada vez; assim como foi com Bruno.
+            </p>
+          </div>
 
           <h3 className="mt-10 text-xs font-semibold tracking-[0.2em] text-olive uppercase font-sans">
             Por que o método funciona
@@ -798,32 +720,18 @@ function Autores() {
           </ul>
         </div>
       </div>
+    </Section>
+  );
+}
 
-      {TESTIMONIALS.length > 0 && (
-        <div className="mt-20">
-          <h3 className="text-center text-2xl text-charcoal sm:text-3xl">
-            Quem já passou pela cozinha
-          </h3>
-          <ul className="mt-10 grid gap-5 md:grid-cols-3">
-            {TESTIMONIALS.map(({ quote, name, detail }) => (
-              <li
-                key={name}
-                className="rounded-xl border border-charcoal/10 bg-cotton p-7 shadow-soft"
-              >
-                <p className="font-heading text-lg leading-relaxed text-charcoal italic">
-                  “{quote}”
-                </p>
-                <p className="mt-5 text-sm font-semibold text-charcoal">
-                  {name}
-                </p>
-                {detail && (
-                  <p className="text-sm text-charcoal/75">{detail}</p>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+function Depoimentos() {
+  return (
+    <Section
+      id="depoimentos"
+      labelledBy="testimonials-title"
+      className="bg-olive-mist grain-dark"
+    >
+      <Testimonials />
     </Section>
   );
 }
@@ -914,15 +822,15 @@ function CtaFinal() {
       className="relative py-20 sm:py-28"
     >
       <div className={container}>
-        <div className="mx-auto max-w-lg overflow-hidden rounded-xl border border-charcoal/10 bg-cotton shadow-lift lg:grid lg:max-w-5xl lg:grid-cols-[0.9fr_1.1fr]">
-          <div className="relative aspect-[16/10] lg:aspect-auto">
+        <div className="mx-auto max-w-lg overflow-hidden rounded-xl border border-charcoal/10 bg-cotton shadow-lift lg:grid lg:max-w-6xl lg:grid-cols-[0.82fr_1.18fr]">
+          <div className="relative aspect-[4/5] sm:aspect-[3/4] lg:aspect-auto lg:h-full lg:min-h-[36rem]">
             <Image
               src="/images/torrada.jpg"
-              alt="Torrada crocante coberta com carne temperada, legumes e ervas frescas"
+              alt={`Exemplar do e-book ${BOOK_TITLE} sobre a mesa, com vinho, azeite e ingredientes ao redor`}
               fill
               sizes="(min-width: 1024px) 440px, (min-width: 512px) 512px, 100vw"
               quality={90}
-              className="object-cover"
+              className="object-cover object-center"
             />
           </div>
 
@@ -936,56 +844,88 @@ function CtaFinal() {
               <em className="text-terracotta">confiança e prazer.</em>
             </h2>
 
-            <p
-              className="mt-8 flex items-baseline justify-center gap-1 text-charcoal lg:justify-start"
-              aria-label={`Preço: ${PRICE.currency} ${PRICE.whole},${PRICE.cents}`}
-            >
-              <span aria-hidden className="text-xl font-medium text-charcoal/75">
-                {PRICE.currency}
-              </span>
-              <span
-                aria-hidden
-                className="font-heading text-7xl leading-none font-medium tracking-tight"
-              >
-                {PRICE.whole}
-              </span>
-              <span
-                aria-hidden
-                className="font-heading text-3xl font-medium tracking-tight"
-              >
-                ,{PRICE.cents}
-              </span>
+            <div className="mt-8 text-left">
+              <p className="text-xs font-semibold tracking-[0.16em] text-olive uppercase">
+                Tudo o que vocês recebem imediatamente hoje
+              </p>
+              <ul className="mt-4 divide-y divide-charcoal/10 border-y border-charcoal/10">
+                {OFFER_STACK.map((item) => (
+                  <li key={item.text} className="flex items-start gap-3 py-3.5">
+                    <span
+                      aria-hidden
+                      className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-olive text-cotton"
+                    >
+                      <Check className="size-3" strokeWidth={3} />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block text-sm leading-relaxed text-charcoal">
+                        {item.text}
+                      </span>
+                      <span className="mt-1 block text-xs font-semibold tracking-wide text-terracotta uppercase">
+                        {item.value}
+                      </span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <p className="mt-6 rounded-xl border border-dashed border-terracotta/45 bg-terracotta-soft/10 px-4 py-4 text-left text-sm leading-relaxed text-pretty text-charcoal">
+              🍕 Faça as contas: Um único pedido de pizza ou dois hambúrgueres
+              no delivery num fim de semana custa facilmente entre R$ 80 e R$
+              120 — e acaba em 20 minutos. Por menos da metade de um único
+              delivery, vocês levam o método e as receitas para a vida inteira.
             </p>
 
-            <ul className="mx-auto mt-8 max-w-sm space-y-3 text-left lg:mx-0">
-              {OFFER_INCLUDES.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-3 text-charcoal/85"
-                >
-                  <span
-                    aria-hidden
-                    className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-olive text-cotton"
-                  >
-                    <Check className="size-3" strokeWidth={3} />
+            <div
+              className="mt-8 flex flex-col items-center gap-2 lg:items-start"
+              aria-label={`De ${PRICE.currency} ${PRICE.originalWhole},${PRICE.originalCents}. Lançamento com ${PRICE.discountPercent}% de desconto: ${PRICE.currency} ${PRICE.whole},${PRICE.cents} à vista, ou em até 12x de ${PRICE.currency} 4,13 no cartão`}
+            >
+              <p className="flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1 lg:justify-start">
+                <span className="text-base text-charcoal/50">
+                  De{" "}
+                  <span className="line-through decoration-charcoal/40">
+                    {PRICE.currency} {PRICE.originalWhole},{PRICE.originalCents}
                   </span>
-                  {item}
-                </li>
-              ))}
-            </ul>
+                </span>
+                <span className="text-sm font-medium tracking-wide text-terracotta uppercase">
+                  Lançamento • {PRICE.discountPercent}% off
+                </span>
+              </p>
+              <p className="flex items-baseline gap-1 text-charcoal">
+                <span aria-hidden className="text-xl font-medium text-charcoal/75">
+                  {PRICE.currency}
+                </span>
+                <span
+                  aria-hidden
+                  className="font-heading text-7xl leading-none font-medium tracking-tight"
+                >
+                  {PRICE.whole}
+                </span>
+                <span
+                  aria-hidden
+                  className="font-heading text-3xl font-medium tracking-tight"
+                >
+                  ,{PRICE.cents}
+                </span>
+              </p>
+              <p className="text-sm text-charcoal/75">
+                à vista no Pix, Apple Pay ou Cartão
+              </p>
+              <p className="text-sm font-medium text-charcoal">
+                ou em até 12x de {PRICE.currency} 4,13* no cartão de crédito
+              </p>
+            </div>
 
-            <CtaButton href={CHECKOUT_URL} className="mt-10 w-full">
-              Garantir meu guia e salvar o jantar
+            <CtaButton href={CHECKOUT_URL} className="mt-8 w-full">
+              {BUY_LABEL}
             </CtaButton>
 
-            <p className="mt-5 flex items-start justify-center gap-2 text-left text-sm text-charcoal/75 lg:justify-start">
-              <ShieldCheck
-                className="mt-0.5 size-4 shrink-0 text-olive"
-                aria-hidden
-              />
+            <p className="mt-5 flex items-start justify-center gap-2 text-left text-sm leading-relaxed text-charcoal/75 lg:justify-start">
+              <Lock className="mt-0.5 size-4 shrink-0 text-olive" aria-hidden />
               <span>
-                Garantia de 7 dias. Se o guia não fizer sentido para a cozinha
-                de vocês, é só pedir o reembolso.
+                Checkout 100% Seguro via Hotmart • Pix, Cartão ou Apple Pay •
+                Garantia incondicional de 7 dias
               </span>
             </p>
           </div>
@@ -1047,6 +987,7 @@ export default function Page() {
         <Beneficios />
         <Playlists />
         <Autores />
+        <Depoimentos />
         <Duvidas />
         <CtaFinal />
       </main>

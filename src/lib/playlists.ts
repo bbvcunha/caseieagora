@@ -37,7 +37,7 @@ export const PLAYLISTS: readonly Playlist[] = [
   },
   {
     id: "noite",
-    title: "Hoje eu cozinho pra você",
+    title: "Hoje eu cozinho para você",
     description:
       "Para aquela noite em que um decide cozinhar para o outro. O resto é com o carinho.",
     url: "https://open.spotify.com/playlist/5C50bE7T7Z6h4zZ2PRdL1D",

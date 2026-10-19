@@ -1,8 +1,13 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
-import { isHotmartCheckout } from "@/lib/checkout";
+import { appendTrackingParams, isHotmartCheckout } from "@/lib/checkout";
+
+function subscribeToLocation(onStoreChange: () => void) {
+  window.addEventListener("popstate", onStoreChange);
+  return () => window.removeEventListener("popstate", onStoreChange);
+}
 
 const focusRing =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-terracotta";
@@ -27,6 +32,12 @@ export function CtaButton({
 }) {
   const ref = useRef<HTMLAnchorElement>(null);
   const hotmart = isHotmartCheckout(href);
+  const search = useSyncExternalStore(
+    subscribeToLocation,
+    () => window.location.search,
+    () => "",
+  );
+  const trackedHref = hotmart ? appendTrackingParams(href, search) : href;
 
   useEffect(() => {
     const el = ref.current;
@@ -42,7 +53,7 @@ export function CtaButton({
   return (
     <a
       ref={ref}
-      href={href}
+      href={trackedHref}
       className={`group inline-flex items-center justify-center gap-2 rounded-lg bg-terracotta text-center leading-snug font-semibold text-balance text-white shadow-cta transition duration-200 hover:bg-terracotta-deep active:translate-y-px ${focusRing} ${ctaSizes[size]} ${hotmart ? "hotmart-fb" : ""} ${className}`}
     >
       {children}
