@@ -261,7 +261,7 @@ export function EbookPreview() {
           <span aria-hidden className="h-px w-8 shrink-0 bg-current opacity-60" />
         </p>
         <h3 className="mt-5 text-3xl leading-[1.12] text-balance text-charcoal sm:text-4xl">
-          Espie por dentro das 138 páginas otimizadas para celular
+          Espie por dentro do ebook otimizado para celular
         </h3>
         <p className="mt-5 text-base leading-relaxed text-pretty text-charcoal/75">
           Nada de dar zoom em PDF com letra miúda. Toque nas abas abaixo para

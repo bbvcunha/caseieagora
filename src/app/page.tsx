@@ -795,8 +795,8 @@ function CtaFinal() {
         <div className="mx-auto max-w-lg overflow-hidden rounded-xl border border-charcoal/10 bg-cotton shadow-lift lg:grid lg:max-w-6xl lg:grid-cols-[0.82fr_1.18fr]">
           <div className="relative aspect-[4/5] sm:aspect-[3/4] lg:aspect-auto lg:h-full lg:min-h-[36rem]">
             <Image
-              src="/images/torrada.jpg"
-              alt={`Exemplar do e-book ${BOOK_TITLE} sobre a mesa, com vinho, azeite e ingredientes ao redor`}
+              src="/images/comprar-ebook-cozinha.jpg"
+              alt={`Capa do e-book ${BOOK_TITLE} no tablet, na bancada da cozinha`}
               fill
               sizes="(min-width: 1024px) 440px, (min-width: 512px) 512px, 100vw"
               quality={90}
