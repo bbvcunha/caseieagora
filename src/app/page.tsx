@@ -43,12 +43,9 @@ const PRICE = {
 const BUY_LABEL = "Quero meu ebook por 39,90";
 
 const HERO_POINTS = [
-  "E-book Digital para consultar no celular, tablet ou computador",
-  "Bônus – Lista de aquisições de utensílios",
-  "Bônus – Manual de cortes",
-  "Playlists Spotify",
-  "Acesso imediato no e-mail",
-  "Garantia incondicional de 7 dias",
+  "E-book digital (138 páginas feitas para ler no celular)",
+  "Acesso imediato no e-mail + 4 playlists no Spotify",
+  "Garantia de 7 dias",
 ] as const;
 
 const NAV_LINKS = [
@@ -171,32 +168,14 @@ const FAQ: readonly { question: string; answer: string }[] = [
   },
 ];
 
-const OFFER_STACK: readonly { text: string; value: string }[] = [
-  {
-    text: "E-book Completo “Casei, e agora, o que vamos comer?” (138 páginas diagramadas para leitura fácil no celular, tablet, PC ou impressão)",
-    value: "Valor: R$ 49,90",
-  },
-  {
-    text: "Guia Introdutório “O Básico da Nossa Cozinha” (Lista enxuta de utensílios, cortes seguros, medidas sem balança, controle de fogo e segurança alimentar ANVISA/USDA)",
-    value: "Valor: R$ 19,90",
-  },
-  {
-    text: "Sistema das 15 a 20 Marmitas Quinzenais (Lista de compras inteligente + combinações modulares + guia do que congela e não congela)",
-    value: "Valor: R$ 27,00",
-  },
-  {
-    text: "Guia “Hoje Vamos Receber” & “Noite a Dois” (Cronograma de anfitrião sem ficar preso no fogão + cardápios completos para amigos e casal)",
-    value: "Incluso",
-  },
-  {
-    text: "Boxes Práticos “Segredo de Chef”, “Não Faça Isso” e “Deu Errado?” em todas as receitas para salvar qualquer preparo",
-    value: "Incluso",
-  },
-  {
-    text: "4 Playlists Exclusivas no Spotify integradas por QR Code e link direto (“Café sem pressa”, “Os amigos chegaram”, “Jantar feito junto” e “Hoje eu cozinho para você”)",
-    value: "Bônus Exclusivo",
-  },
-];
+const OFFER_STACK = [
+  "E-book completo “Casei, e agora, o que vamos comer?” (138 páginas diagramadas para celular, tablet, computador ou impressão)",
+  "Guia Introdutório “O básico da nossa cozinha” (utensílios essenciais, medidas sem balança, controle de fogo e segurança alimentar)",
+  "Sistema das 15 a 20 marmitas quinzenais + lista de compras inteligente e guia de congelamento",
+  "Cronograma prático para receber amigos (receitas para 4 pessoas) e jantar especial a dois",
+  "Quadros práticos “Segredo de chef”, “Não faça isso” e “Deu errado?” em todas as receitas",
+  "4 playlists exclusivas no Spotify integradas ao livro",
+] as const;
 
 /* -------------------------------------------------------------------------- */
 /*  Primitivas de UI                                                           */
@@ -267,7 +246,7 @@ function Section({
     <section
       id={id}
       aria-labelledby={labelledBy}
-      className={`relative py-20 sm:py-28 ${className}`}
+      className={`relative py-14 sm:py-28 ${className}`}
     >
       <div className={container}>{children}</div>
     </section>
@@ -355,7 +334,7 @@ function Hero() {
     <section
       id="topo"
       aria-labelledby="hero-title"
-      className="relative isolate overflow-hidden pt-32 pb-20 lg:pt-44 lg:pb-28"
+      className="relative isolate overflow-hidden pt-28 pb-14 lg:pt-44 lg:pb-28"
     >
       {/* Luz suave de fim de tarde: terracota de um lado, oliva do outro. */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
@@ -379,19 +358,11 @@ function Hero() {
             <em className="text-terracotta">depender do delivery.</em>
           </h1>
 
-          <div className="mx-auto mt-6 max-w-2xl space-y-4 text-base leading-relaxed text-pretty text-charcoal/80 sm:text-lg lg:mx-0">
-            <p>
-              Descubra o prazer de preparar, em casa, a comida que vocês gostam
-              de comer. Receitas explicadas passo a passo, histórias reais e
-              dicas da chef para transformar ingredientes simples em refeições
-              que vocês terão orgulho de servir.
-            </p>
-            <p>
-              Do café da manhã às marmitas, do jantar a dois à mesa com amigos:
-              aprendam a combinar sabor e a organizar uma rotina que funciona,
-              mesmo que hoje vocês ainda não saibam por onde começar.
-            </p>
-          </div>
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-pretty text-charcoal/80 sm:text-lg lg:mx-0">
+            Um guia pensado para a vida real: para vocês montarem a cozinha sem
+            gastar à toa, resolverem a semana com 15 a 20 marmitas práticas e
+            cozinharem juntos — mesmo começando do zero.
+          </p>
 
           <div className="mt-10 flex flex-col items-center gap-5 lg:items-start">
             <CtaButton href={CHECKOUT_URL} className="w-full sm:w-auto">
@@ -470,6 +441,7 @@ function Livro() {
             sizes="(min-width: 1024px) 420px, (min-width: 640px) 384px, 100vw"
             quality={90}
             className="object-cover object-center"
+            loading="lazy"
           />
         </div>
 
@@ -559,6 +531,7 @@ function Beneficios() {
                   sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 82vw"
                   quality={90}
                   className="object-cover"
+                  loading="lazy"
                 />
               </div>
 
@@ -639,7 +612,8 @@ function Autores() {
             width={576}
             height={1024}
             unoptimized
-            className="block h-auto w-56 sm:w-64 lg:w-72"
+            loading="lazy"
+            className="block h-auto w-56 object-cover sm:w-64 lg:w-72"
           />
         </div>
 
@@ -787,9 +761,9 @@ function Duvidas() {
 function CtaFinal() {
   return (
     <section
-      id="comprar"
+      id="oferta"
       aria-labelledby="buy-title"
-      className="relative py-20 sm:py-28"
+      className="relative py-14 sm:py-28"
     >
       <div className={container}>
         <div className="mx-auto max-w-lg overflow-hidden rounded-xl border border-charcoal/10 bg-cotton shadow-lift lg:grid lg:max-w-6xl lg:grid-cols-[0.82fr_1.18fr]">
@@ -800,6 +774,7 @@ function CtaFinal() {
               fill
               sizes="(min-width: 1024px) 440px, (min-width: 512px) 512px, 100vw"
               quality={90}
+              loading="lazy"
               className="object-cover object-center"
             />
           </div>
@@ -820,20 +795,15 @@ function CtaFinal() {
               </p>
               <ul className="mt-4 divide-y divide-charcoal/10 border-y border-charcoal/10">
                 {OFFER_STACK.map((item) => (
-                  <li key={item.text} className="flex items-start gap-3 py-3.5">
+                  <li key={item} className="flex items-start gap-3 py-3.5">
                     <span
                       aria-hidden
                       className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full bg-olive text-cotton"
                     >
                       <Check className="size-3" strokeWidth={3} />
                     </span>
-                    <span className="min-w-0">
-                      <span className="block text-sm leading-relaxed text-charcoal">
-                        {item.text}
-                      </span>
-                      <span className="mt-1 block text-xs font-semibold tracking-wide text-terracotta uppercase">
-                        {item.value}
-                      </span>
+                    <span className="text-sm leading-relaxed text-charcoal">
+                      {item}
                     </span>
                   </li>
                 ))}
@@ -841,10 +811,8 @@ function CtaFinal() {
             </div>
 
             <p className="mt-6 rounded-xl border border-dashed border-terracotta/45 bg-terracotta-soft/10 px-4 py-4 text-left text-sm leading-relaxed text-pretty text-charcoal">
-              🍕 Faça as contas: Um único pedido de pizza ou dois hambúrgueres
-              no delivery num fim de semana custa facilmente entre R$ 80 e R$
-              120 — e acaba em 20 minutos. Por menos da metade de um único
-              delivery, vocês levam o método e as receitas para a vida inteira.
+              Por menos do que custa pedir uma pizza no fim de semana, vocês
+              levam um guia prático para usar a vida inteira.
             </p>
 
             <div
@@ -888,14 +856,14 @@ function CtaFinal() {
             </div>
 
             <CtaButton href={CHECKOUT_URL} className="mt-8 w-full">
-              {BUY_LABEL}
+              Quero o meu guia agora
             </CtaButton>
 
             <p className="mt-5 flex items-start justify-center gap-2 text-left text-sm leading-relaxed text-charcoal/75 lg:justify-start">
               <Lock className="mt-0.5 size-4 shrink-0 text-olive" aria-hidden />
               <span>
-                Checkout 100% Seguro via Hotmart • Pix, Cartão ou Apple Pay •
-                Garantia incondicional de 7 dias
+                Pagamento 100% seguro via Hotmart • Pix, Cartão ou Apple Pay •
+                Acesso imediato e 7 dias de garantia
               </span>
             </p>
           </div>

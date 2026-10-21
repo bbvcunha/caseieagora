@@ -69,6 +69,36 @@ html {
   scroll-padding-top: 6rem;
 }
 
+/*
+ * CTA primário. Cores e visibilidade com !important para o botão não sumir
+ * se algum reset ou script de terceiros zerar opacidade ou fundo.
+ */
+a.cta-primary,
+a.cta-primary:visited {
+  background-color: #a84a2b !important;
+  color: #ffffff !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgb(168 74 43 / 0.25);
+}
+
+a.cta-primary:hover {
+  background-color: #8e3b20 !important;
+  color: #ffffff !important;
+}
+
+a.cta-primary svg {
+  color: #ffffff !important;
+  stroke: currentColor;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

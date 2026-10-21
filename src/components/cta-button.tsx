@@ -41,7 +41,7 @@ export function CtaButton({
   return (
     <a
       href={trackedHref}
-      className={`group inline-flex items-center justify-center gap-2 rounded-lg bg-terracotta text-center leading-snug font-semibold text-balance text-white shadow-cta transition duration-200 hover:bg-terracotta-deep active:translate-y-px ${focusRing} ${ctaSizes[size]} ${className}`}
+      className={`cta-primary group inline-flex items-center justify-center gap-2 rounded-lg bg-terracotta text-center leading-snug font-semibold text-balance text-white shadow-cta transition duration-200 hover:bg-terracotta-deep active:translate-y-px ${focusRing} ${ctaSizes[size]} ${className}`}
     >
       {children}
       {withArrow && (
