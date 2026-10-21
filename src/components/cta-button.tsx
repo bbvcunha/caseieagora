@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
+import { useSyncExternalStore, type ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
 import { appendTrackingParams, isHotmartCheckout } from "@/lib/checkout";
 
@@ -30,7 +30,6 @@ export function CtaButton({
   withArrow?: boolean;
   className?: string;
 }) {
-  const ref = useRef<HTMLAnchorElement>(null);
   const hotmart = isHotmartCheckout(href);
   const search = useSyncExternalStore(
     subscribeToLocation,
@@ -39,22 +38,10 @@ export function CtaButton({
   );
   const trackedHref = hotmart ? appendTrackingParams(href, search) : href;
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || !hotmart) return;
-    // O snippet da Hotmart usa `onclick="return false"`. No celular o widget
-    // troca para `return true` e o href abre a página de pagamento — por isso
-    // só gravamos o atributo se ele ainda não existir.
-    if (!el.getAttribute("onclick")) {
-      el.setAttribute("onclick", "return false;");
-    }
-  }, [hotmart]);
-
   return (
     <a
-      ref={ref}
       href={trackedHref}
-      className={`group inline-flex items-center justify-center gap-2 rounded-lg bg-terracotta text-center leading-snug font-semibold text-balance text-white shadow-cta transition duration-200 hover:bg-terracotta-deep active:translate-y-px ${focusRing} ${ctaSizes[size]} ${hotmart ? "hotmart-fb" : ""} ${className}`}
+      className={`group inline-flex items-center justify-center gap-2 rounded-lg bg-terracotta text-center leading-snug font-semibold text-balance text-white shadow-cta transition duration-200 hover:bg-terracotta-deep active:translate-y-px ${focusRing} ${ctaSizes[size]} ${className}`}
     >
       {children}
       {withArrow && (

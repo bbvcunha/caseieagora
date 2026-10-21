@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Montserrat, Playfair_Display } from "next/font/google";
-import { HotmartWidget } from "@/components/hotmart-widget";
 import { SmoothAnchors } from "@/components/smooth-anchors";
 import "./globals.css";
 
@@ -70,7 +69,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-full flex-col bg-cotton font-sans text-charcoal antialiased">
         {children}
         <SmoothAnchors />
-        <HotmartWidget />
       </body>
     </html>
   );
