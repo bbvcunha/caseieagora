@@ -115,7 +115,7 @@ export function PlaylistShowcase({
         {/* `key` reinicia a animação a cada troca de playlist */}
         <div
           key={active.id}
-          className="flex flex-col items-center gap-6 text-center sm:flex-row sm:gap-8 sm:text-left"
+          className="flex animate-fade-up flex-col items-center gap-6 text-center motion-reduce:animate-none sm:flex-row sm:gap-8 sm:text-left"
         >
           {/* O QR Code também é um link: no celular, tocar abre o Spotify. */}
           <a
@@ -154,7 +154,7 @@ export function PlaylistShowcase({
                 href={active.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`cta-primary inline-flex min-h-11 items-center gap-1.5 rounded-lg bg-terracotta px-4 text-sm font-semibold text-white shadow-cta transition-colors hover:bg-terracotta-deep ${focusRingOnCard}`}
+                className={`inline-flex min-h-11 items-center gap-1.5 rounded-lg bg-terracotta px-4 text-sm font-semibold text-white shadow-cta transition-colors hover:bg-terracotta-deep ${focusRingOnCard}`}
               >
                 Abrir no Spotify
                 <ArrowUpRight className="size-4" aria-hidden />

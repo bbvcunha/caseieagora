@@ -8,31 +8,31 @@ const TESTIMONIALS: readonly {
 }[] = [
   {
     quote:
-      "No segundo mês de casados levamos um susto com o gasto de delivery porque a gente sempre chegava cansado sem saber o que fazer. Só a lista de compras e o esquema das marmitas da Leciane já mudaram nossa semana. Domingo fizemos a sobrecoxa assada, o feijão e a carne moída em duas horinhas ouvindo a playlist.",
+      "A gente fechou a fatura do cartão no segundo mês de casados e levou um susto: quase R$ 1.400 só de delivery porque chegávamos cansados às 20h sem ideia do que fazer. Só a lista de compras e o esquema das marmitas quinzenais da Leciane pagaram esse livro umas vinte vezes na primeira semana. Domingo passado fizemos a sobrecoxa assada, o feijão base e a carne moída coringa em duas horinhas ouvindo a playlist. Melhor investimento da casa nova!",
     name: "Mariana & Lucas S.",
     detail: "Casados há 4 meses • São Paulo, SP",
   },
   {
     quote:
-      "Eu era exatamente o Bruno da história: minha especialidade era queimar ovo. O que mais gostei é que a Leciane não fala difícil. Ela explica desde como segurar a faca até a hora certa de desligar o ovo mexido e dourar o alho sem amargar. Já assumi o café da manhã de domingo aqui em casa.",
+      "Eu era exatamente o Bruno da história: minha especialidade era ovo queimado na borda e cru no meio kkk. O que mais gostei é que a Leciane não fala difícil. Ela explica desde como segurar a faca com a mão em garra até a hora exata de tirar o ovo mexido do fogo e o truque de dourar o alho antes da cebola. Hoje já assumi o café da manhã de domingo aqui em casa e ninguém morreu envenenado ainda!",
     name: "Rafael Mendes, 31 anos",
-    detail: "Curitiba, PR",
+    detail: "Começou do absoluto zero • Curitiba, PR",
   },
   {
     quote:
-      "Toda vez que a gente chamava amigos pra jantar, eu passava a noite inteira no fogão enquanto todo mundo conversava na sala. Segui o cronograma do Capítulo 3: deixei a caponata e o molho de tomate assado prontos antes e só montei a tábua de queijos na hora. Pela primeira vez jantei sentada com meus amigos.",
+      "Toda vez que a gente chamava um casal de amigos pra jantar, eu passava a noite inteira suando na frente do fogão enquanto todo mundo ria na sala tomando vinho. Segui o “Cronograma de quem recebe” do Capítulo 3: fiz a caponata e o molho pomodoro assado no sábado de manhã e montei a tábua de queijos 15 minutos antes de tocarem a campainha. Pela primeira vez eu jantei sentada conversando com meus amigos. Sem preço.",
     name: "Camila & Pedro T.",
     detail: "Morando juntos há 1 ano • Belo Horizonte, MG",
   },
   {
     quote:
-      "Sempre travei em receita que pedia balança ou utensílio que eu não tenho. Nesse livro tudo tem medida em xícara e colher do lado, e os quadros de “Deu errado?” salvam muito. Fiz o risoto de queijo e o pudim na sexta seguindo a dica de não mexer a calda e deu super certo.",
+      "Sempre travei em livro de culinária porque pedia “160g disso”, “termômetro daquilo” ou 10 utensílios que eu não tenho. Nesse e-book tudo tem medida em xícara e colher do lado, e os avisos de “Deu errado?” salvam demais! Fiz o pudim clássico seguindo a dica de não colocar a colher na calda depois que ferve e fiz o risoto de queijo pra minha namorada na sexta. Ficou digno de restaurante.",
     name: "Gabriel Costa, 27 anos",
-    detail: "Florianópolis, SC",
+    detail: "Primeira cozinha montada • Florianópolis, SC",
   },
   {
     quote:
-      "A leitura é tão leve que li inteiro no celular numa tarde. A parte que diz que a gente não precisa decidir quem é “a pessoa que cozinha da casa” mudou nossa rotina. Agora deixamos o PDF aberto no balcão, damos play na playlist e cozinhamos juntos.",
+      "Eu comprei achando que era só um livro de receitas rápidas, mas a leitura é tão gostosa que li inteiro no celular em uma tarde. A parte que diz que a gente não precisa decidir quem é “a pessoa que cozinha da casa” mudou nossa dinâmica aqui. Agora deixamos o PDF aberto no celular apoiado no balcão, damos play no Spotify do QR Code e cozinhamos juntos conversando. Virou o nosso melhor momento do dia.",
     name: "Juliana Nogueira, 34 anos",
     detail: "Casada há 2 anos • Rio de Janeiro, RJ",
   },
